@@ -1,13 +1,13 @@
 package br.com.gestaoescala.domain.enums;
 
-public enum Nucleo {
+public enum NucleoEnum {
 	NORTE(1, "Norte"),
     SUL(2, "Sul");
 
     private int cod;
     private String descricao;
 
-    Nucleo(int cod, String descricao) {
+    NucleoEnum(int cod, String descricao) {
         this.cod = cod;
         this.descricao = descricao;
     }
@@ -20,12 +20,12 @@ public enum Nucleo {
         return descricao;
     }
 
-    public static Nucleo toEnum(Integer cod){
+    public static NucleoEnum toEnum(Integer cod){
         if(cod == null){
             return null;
         }
 
-        for(Nucleo tipo: Nucleo.values()){
+        for(NucleoEnum tipo: NucleoEnum.values()){
             if(cod.equals((tipo.getCod()))){
                 return tipo;
             }

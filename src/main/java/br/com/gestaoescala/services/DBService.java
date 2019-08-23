@@ -15,7 +15,7 @@ public class DBService {
 	@Autowired
 	public ServidorRepository servidorRepository;
 	
-	public void instantiateDatabase() throws ParseException{
+	public void instantiateTestDatabase() throws ParseException{
 		Servidor ser1 = new Servidor(null, "1234", "Teste", "teste@gmail.com");
 		Servidor ser2 = new Servidor(null, "4321", "Teste 2", "teste2@gmail.com");
 		

@@ -80,6 +80,11 @@ public class ServidorService {
 	}
 	
 	public Servidor findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if ( user==null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())){
+			throw new AuthorizationException("Acesso Negado");
+		}
+		
 		Servidor obj = servidorDao.findByEmail(email);
 		if (obj == null) {
 			throw new ObjectNotFoundException(

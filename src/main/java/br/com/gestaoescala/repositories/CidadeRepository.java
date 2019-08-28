@@ -3,12 +3,18 @@ package br.com.gestaoescala.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.gestaoescala.domain.Cidade;
 
 @Repository
 public interface CidadeRepository extends JpaRepository<Cidade, Integer>{
 	
-	List<Cidade> findCidadesByOrderByNome(Integer estadoId);
+	@Transactional(readOnly=true)
+	@Query("Select obj FROM Cidade obj where obj.estado.id = :estadoId Order By obj.nome")
+	public List<Cidade> findCidades(@Param("estadoId") Integer estadoId);
+	
 }

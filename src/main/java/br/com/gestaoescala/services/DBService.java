@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.gestaoescala.domain.Cidade;
@@ -18,6 +19,9 @@ import br.com.gestaoescala.repositories.ServidorRepository;
 public class DBService {
 
 	@Autowired
+	private BCryptPasswordEncoder pe;
+	
+	@Autowired
 	public ServidorRepository servidorRepository;
 	
 	@Autowired
@@ -27,8 +31,8 @@ public class DBService {
 	private CidadeRepository cidadeRepository;
 	
 	public void instantiateTestDatabase() throws ParseException{
-		Servidor ser1 = new Servidor(null, "1234", "Teste", "teste@gmail.com");
-		Servidor ser2 = new Servidor(null, "4321", "Teste 2", "teste2@gmail.com");
+		Servidor ser1 = new Servidor(null, "1234", "Teste", "teste@gmail.com", pe.encode("1234"));
+		Servidor ser2 = new Servidor(null, "4321", "Teste 2", "teste2@gmail.com",pe.encode("1234"));
 		
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");

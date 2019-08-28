@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,10 @@ public class ServidorService {
 
 	@Autowired
 	private ServidorRepository servidorDao;
+	
+
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
@@ -81,11 +86,11 @@ public class ServidorService {
 	}
 	
 	public Servidor fromDTO(ServidorDTO objDto) {
-		return new Servidor(objDto.getId(), objDto.getMatricula(), objDto.getNome(), objDto.getEmail());
+		return new Servidor(objDto.getId(), objDto.getMatricula(), objDto.getNome(), objDto.getEmail(),null );
 	}
 	
 	public Servidor fromDTO(ServidorNewDTO objDto) {
-		Servidor cli = new Servidor(null, objDto.getMatricula(), objDto.getNome(), objDto.getEmail());
+		Servidor cli = new Servidor(null, objDto.getMatricula(), objDto.getNome(), objDto.getEmail(),pe.encode(objDto.getSenha()));
 		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
 		Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cid);
 		cli.getEnderecos().add(end);

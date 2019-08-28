@@ -18,6 +18,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.gestaoescala.domain.enums.Perfil;
 
 @Entity
@@ -36,6 +38,9 @@ public class Servidor implements Serializable{
 	@Column(unique=true)
 	private String email;
 	
+	@JsonIgnore
+	private String senha;
+	
 	@OneToMany(mappedBy = "servidor", cascade=CascadeType.ALL)
     private List<Endereco> enderecos = new ArrayList<>();
 
@@ -51,12 +56,13 @@ public class Servidor implements Serializable{
 		addPerfil(Perfil.SERVIDOR);
 	}
 
-	public Servidor(Integer id, String matricula, String nome, String email) {
+	public Servidor(Integer id, String matricula, String nome, String email, String senha) {
 		super();
 		this.id = id;
 		this.matricula = matricula;
 		this.nome = nome;
 		this.email = email;
+		this.senha = senha;
 		addPerfil(Perfil.SERVIDOR);
 	}
 
@@ -114,6 +120,14 @@ public class Servidor implements Serializable{
 
 	public void addPerfil(Perfil perfil) {
 		perfis.add(perfil.getCod());
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	@Override

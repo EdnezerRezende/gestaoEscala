@@ -15,10 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.gestaoescala.domain.Cidade;
 import br.com.gestaoescala.domain.Endereco;
 import br.com.gestaoescala.domain.Servidor;
+import br.com.gestaoescala.domain.enums.Perfil;
 import br.com.gestaoescala.dto.ServidorDTO;
 import br.com.gestaoescala.dto.ServidorNewDTO;
 import br.com.gestaoescala.repositories.EnderecoRepository;
 import br.com.gestaoescala.repositories.ServidorRepository;
+import br.com.gestaoescala.security.UserSS;
+import br.com.gestaoescala.services.exceptions.AuthorizationException;
 import br.com.gestaoescala.services.exceptions.DataIntegrityException;
 import br.com.gestaoescala.services.exceptions.ObjectNotFoundException;
 
@@ -36,6 +39,11 @@ public class ServidorService {
 	private EnderecoRepository enderecoRepository;
 	
 	public Servidor buscar(Integer id) {
+		UserSS user = UserService.authenticated();
+		if ( user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())){
+			throw new AuthorizationException("Acesso Negado");
+		}
+		
 		Optional<Servidor> servidor = servidorDao.findById(id);
 		return servidor.orElseThrow(()-> 
 			new br.com.gestaoescala.services.exceptions.ObjectNotFoundException(

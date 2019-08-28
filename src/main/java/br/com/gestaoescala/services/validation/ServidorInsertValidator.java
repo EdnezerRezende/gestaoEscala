@@ -8,10 +8,10 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.gestaoescala.controllers.excpetions.FieldMessage;
 import br.com.gestaoescala.domain.Servidor;
 import br.com.gestaoescala.dto.ServidorNewDTO;
 import br.com.gestaoescala.repositories.ServidorRepository;
-import br.com.gestaoescala.resources.exception.FieldMessage;
 
 public class ServidorInsertValidator implements ConstraintValidator<ServidorInsert, ServidorNewDTO>{
 	

@@ -1,4 +1,4 @@
-package br.com.gestaoescala.resources.exception;
+package br.com.gestaoescala.controllers.excpetions;
 
 import java.io.Serializable;
 
